@@ -51,7 +51,25 @@ type JournalEntry {
   value: Int!
 }
 
+type Author {
+  name: String!
+  age: Int!
+  id: ID!
+  address: String
+  books: [Book]
+  bookList:[Book]
+}
+
+type Book {
+  name: String!
+  id: ID!
+  description: String,
+  author: Author!
+}
+
 type Mutation {
+  createAuthor(input: CreateAuthorInput!): Author!
+  createBook(input:CreateBookInput!):Book!
   createAccount(input: CreateAccountInput!): Account!
   createJournal(input: CreateJournalInput!): Journal!
   deleteAccount(input: DeleteAccountInput!): DeleteAccountPayload!
@@ -61,6 +79,9 @@ type Mutation {
 type Query {
   allAccounts: [Account!]!
   allJournals: [Journal!]!
+  allAuthors: [Author!]!
+  searchByName: [Author!]!
+  allBooks: [Book!]!
 }
 
 enum AccountElementType {
@@ -85,6 +106,18 @@ input CreateJournalEntryInput {
   accountID: ID!
   side: Int!
   value: Int!
+}
+
+input CreateAuthorInput {
+  name: String!
+  age: Int!
+  address: String
+}
+
+input CreateBookInput {
+  name: String!
+  authorId: ID!
+  description: String!
 }
 
 input CreateJournalInput {
